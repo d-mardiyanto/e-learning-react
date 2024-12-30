@@ -104,6 +104,7 @@ export default class MultipleItems extends Component {
         return (
             <div className="pt-40 pb-10 sm:pb-32 lg:py-32" id="testimonial">
                 <div className='mx-auto max-w-7xl sm:py-4 lg:px-8'>
+                    <h2 className="lh-82 text-midnightblue text-4xl md:text-55xl text-center md:text-center font-semibold">Clients Testimonial</h2>
                     <Slider {...settings}>
                         {postData.map((items, i) => (
                             <div key={i}>

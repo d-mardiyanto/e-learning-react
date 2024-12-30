@@ -1,24 +1,21 @@
 "use client"
 import Slider from "react-slick";
-import React, { Component } from "react";
+import React, { Component,useState } from "react";
 import Image from "next/image";
-import { getInstructors } from "@/app/services/api_instructor";
+import { getClasses } from "@/app/services/api_classes";
 
-// CAROUSEL DATA
-interface Instructors {
+interface Classes {
     // Define the structure of your `Classes` type here
-    photo: string;
-    name: string;
-    profession: string;
-    email: string;
-    phone: string;
+    id: number;
+    class_name: string;
 }
 
 interface State {
-    instructors: Instructors[] | null;
+    classes: Classes[] | null;
     loading: boolean;
     error: string | null;
 }
+// CAROUSEL SETTINGS
 
 function SampleNextArrow(props: { className: any; style: any; onClick: any; }) {
     const { className, style, onClick } = props;
@@ -46,7 +43,7 @@ export default class MultipleItems extends Component<{}, State> {
     constructor(props:{}) {
         super(props);
         this.state = {
-            instructors: null,
+            classes: null,
             loading: true,
             error: null,
         };
@@ -54,15 +51,15 @@ export default class MultipleItems extends Component<{}, State> {
 
     async componentDidMount() {
         try {
-            const instructorData = await getInstructors();
-            this.setState({ instructors: instructorData, loading: false });
+            const classesData = await getClasses();
+            this.setState({ classes: classesData, loading: false });
         } catch (error) {
-            this.setState({ error: 'Failed to fetch instructor', loading: false });
+            this.setState({ error: 'Failed to fetch classes', loading: false });
         }
     }
-
+    
     render() {
-        const { instructors } = this.state;
+        const { classes } = this.state;
         const settings = {
             dots: false,
             infinite: true,
@@ -109,24 +106,20 @@ export default class MultipleItems extends Component<{}, State> {
 
 
         return (
-            <div className="py-10 sm:py-24 bg-paleblue" id="mentor">
+            <div className="py-10 sm:py-24 bg-white" id="classes">
 
                 <div className='mx-auto max-w-2xl lg:max-w-7xl sm:py-4 px-4 lg:px-8 relative'>
-                    <h2 className="lh-82 text-midnightblue text-4xl md:text-55xl text-center md:text-start font-semibold">Meet with our <br /> mentor.</h2>
+                    <h2 className="lh-82 text-midnightblue text-4xl md:text-55xl text-center md:text-start font-semibold">Our Classes</h2>
 
                     <Slider {...settings}>
-                        {instructors?.map((items, i) => (
+                        {classes?.map((items, i) => (
                             <div key={i}>
                                 <div className='m-3 py-14 md:my-10 text-center'>
                                     <div className="relative">
-                                        <Image src={items.photo ? items.photo : '/assets/mentor/user1.png' } alt="user-image" width={306} height={0} className="inline-block m-auto" />
-                                        <div className="absolute right-[84px] bottom-[102px] bg-white rounded-full p-4">
-                                            <Image src={'/assets/mentor/linkedin.svg'} alt="linkedin-image" width={25} height={24} />
-                                        </div>
+                                        <Image src={'/assets/classes/def_classes.png'} alt="user-image" width={306} height={0} className="inline-block m-auto" />
                                     </div>
-                                    <div className="-mt-10">
-                                        <h3 className='text-2xl font-semibold text-lightblack'>{items.name}</h3>
-                                        <h4 className='text-lg font-normal text-lightblack pt-2 opacity-50'>{items.profession}</h4>
+                                    <div className="mt-10">
+                                        <h3 className='text-2xl font-semibold text-lightblack'>{items.class_name}</h3>
                                     </div>
                                 </div>
                             </div>
