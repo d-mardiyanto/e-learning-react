@@ -6,7 +6,6 @@ import Classes from './components/Classes/index';
 import Testimonials from './components/Testimonials/index';
 import Newsletter from './components/Newsletter/Newsletter';
 
-
 export default function Home() {
   return (
     <main>
